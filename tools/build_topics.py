@@ -165,7 +165,9 @@ topic(
            "같은 '서울 기온'도 출처에 따라 다릅니다.")
 
 # ── 2. 비 ────────────────────────────────────────────────────────
-rain_days = [sum(1 for x in W if x["d"].year == y and x["rain"] >= 1.0)
+# '비 온 날'은 우산이 확실히 필요한 정도로, 하루 강수량 5mm 이상으로 센다
+RAIN_DAY = 5.0
+rain_days = [sum(1 for x in W if x["d"].year == y and x["rain"] >= RAIN_DAY)
              for y in range(1995, 2025)]
 rain_avg = mean(rain_days)
 by_month = {m: mean([sum(x["rain"] for x in W
@@ -195,9 +197,11 @@ topic(
     "서울의 하루치 강수량 30년",
     "Open-Meteo Archive (ERA5 재분석)", "https://open-meteo.com/",
     [
-        slider("r1", "서울에서 1년 중 비가 온 날(1mm 이상)은 며칠쯤일까요?",
+        slider("r1", f"서울에서 1년 중 비가 온 날(하루 강수량 {RAIN_DAY:g}mm "
+                     f"이상)은 며칠쯤일까요?",
                rain_avg, "일", 40, 160, 5,
-               f"1995~2024년 평균 {rain_avg:.1f}일 "
+               f"1995~2024년 해마다 하루 강수량 {RAIN_DAY:g}mm 이상인 날을 세어 "
+               f"평균하면 {rain_avg:.1f}일 "
                f"(최소 {min(rain_days)}일 · 최대 {max(rain_days)}일)",
                "비 오는 날은 기억에 오래 남아서 실제보다 많게 느껴집니다."),
         choice("r2", "1년 강수량이 가장 많은 달은?",
