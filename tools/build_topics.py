@@ -165,8 +165,8 @@ topic(
            "같은 '서울 기온'도 출처에 따라 다릅니다.")
 
 # ── 2. 비 ────────────────────────────────────────────────────────
-# '비 온 날'은 우산이 확실히 필요한 정도로, 하루 강수량 5mm 이상으로 센다
-RAIN_DAY = 5.0
+# '비 온 날'은 하루 강수량 2mm 이상으로 센다
+RAIN_DAY = 2.0
 rain_days = [sum(1 for x in W if x["d"].year == y and x["rain"] >= RAIN_DAY)
              for y in range(1995, 2025)]
 rain_avg = mean(rain_days)
